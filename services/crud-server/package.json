@@ -7,11 +7,7 @@
     "start": "node dist/index.js",
     "prestart:dev": "npm run build",
     "start:dev": "npm run start",
-    "start:dev:notest": "npm run build:compile && npm run start",
-    "build": "npm run build:lint && npm run test && npm run build:compile",
-    "build:lint": "eslint {tests,src}/**/*.ts --ext .ts --fix",
-    "build:compile": "tsc",
-    "test": "nyc mocha -r ts-node/register tests/**/*.spec.ts"
+    "build": "tsc"
   },
   "author": "Bradley Holbrook",
   "license": "ISC",
