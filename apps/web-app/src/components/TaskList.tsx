@@ -1,20 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { ITask, taskListState } from '../data/TaskList.recoil';
-
+import { ITask, useTaskList } from '../data/useTaskList';
 
 function TaskList(){
 
-    const [ taskList, setTaskList ] = useRecoilState(taskListState);
+    const { taskList, setTaskList, create, markDone } = useTaskList();
     const [ newTaskDescription, setNewTaskDescription ] = useState<string>("");
     
 
     function onClickAdd(){
-        
-        const tasks:ITask[] = newTaskDescription.split("\n").filter(d=>!!d).map(( description:string ) => ({ done: false, description }));
-        
-        // const task:ITask = { done: false, description: newTaskDescription };
-        setTaskList([ ...taskList, ...tasks ]);
+        newTaskDescription.split("\n").filter(d=>!!d).forEach(( description:string ) => create( description ));
         setNewTaskDescription("");
     }
 
@@ -22,17 +17,10 @@ function TaskList(){
         setNewTaskDescription(event.target.value);
     }
 
-    function onCheckTaskHandler( index:number ){
+    function onCheckTaskHandler( task:ITask ){
         
         return function( event:ChangeEvent<HTMLInputElement> ){
-            
-            const newTask = { ...taskList[index] };
-            const newList = [ ...taskList ];
-
-            newTask.done = event.target.checked;
-            newList[index] = newTask;
-            
-            setTaskList( newList );
+            markDone(task.id);
         }
 
     }
@@ -60,7 +48,7 @@ function TaskList(){
             <h1>To Do List</h1>
             <div className="task-list">
                 { taskList.map(( task, index ) => <div key={index} style={{ textAlign: 'left' }}>
-                    <input type="checkbox" onChange={onCheckTaskHandler(index)}/>
+                    <input type="checkbox" onChange={onCheckTaskHandler(task)}/>
                     <input type="textbox" value={task.description} onChange={onUpdateDescriptionHandler(index)}/>
                     <button onClick={onDeleteTaskHandler(index)}>Delete Item</button>
                 </div> )}

@@ -1,12 +1,9 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { completedTaskListState, remainingTaskListState, taskListState } from '../data/TaskList.recoil';
+import { useTaskList } from '../data/useTaskList';
 
 function TaskListSummary(){
 
-    const taskList = useRecoilValue(taskListState);
-    const completedTaskList = useRecoilValue(completedTaskListState);
-    const remainingTaskList = useRecoilValue(remainingTaskListState);
+    const { taskList, completedTaskList, remainingTaskList } = useTaskList();
     
     return (
         <div>
