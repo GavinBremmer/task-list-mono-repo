@@ -14,6 +14,6 @@ export const tasks = {
 
     patch: async ( id:number, body:any ) => {
         return axios.patch(`${HOSTNAME}/${id}`, body);
-    }
+    },
 
 }

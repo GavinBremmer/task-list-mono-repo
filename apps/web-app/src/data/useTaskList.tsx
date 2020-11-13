@@ -44,15 +44,15 @@ export function useTaskList(){
         });
     }
 
-    const markDone = ( id:number ) => {
-        tasksApi.patch( id, { done: true }).then( response => {
+    const markDone = ( id:number, checked:boolean ) => {
+        tasksApi.patch( id, { done: checked }).then( response => {
             return tasksApi.get();
         }).then( response => {
             setTaskList( response.data );
         });
     }
 
-    const remove = () => {
+    const remove = ( ) => {
 
     }
 
